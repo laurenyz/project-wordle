@@ -3,7 +3,7 @@ import Guess from '../Guess';
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 import { range } from '../../utils';
 
-function GuessResults({guesses}) {
+function GuessResults({guesses, answer}) {
   
   const emptyRowNum = NUM_OF_GUESSES_ALLOWED - guesses.length;
   const emptyRows = range(emptyRowNum);
@@ -11,8 +11,7 @@ function GuessResults({guesses}) {
     <div className="guess-results">
       {
         guesses.map(({value, id}) =>{
-          console.log({guesses})
-          return <Guess key={id} value={value} />
+          return <Guess key={id} value={value} answer={answer} />
         })
       }
       {

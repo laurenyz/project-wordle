@@ -1,19 +1,24 @@
 import React from 'react';
+import { checkGuess } from '../../game-helpers';
 
-const defaultArray = Array(5).fill('')
+const defaultArray = Array(5).fill({
+  letter: '',
+  status: ''
+})
 
-function Guess({value = ''}) {
+function Guess({value = '', answer = ''}) {
   let guessArray
   if(!value) {
     guessArray = defaultArray
   } else {
-    guessArray = value.split('')
+    guessArray = checkGuess(value, answer)
   }
+
   return (
     <p className="guess">
       {
-        guessArray.map((letter, index) => {
-          return <span key={index} className="cell">{letter}</span>
+        guessArray.map(({letter, status}, index) => {
+          return <span key={index} className={`cell ${status}`}>{letter}</span>
         })
       }
   </p>);
