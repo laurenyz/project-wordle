@@ -6,7 +6,7 @@ function GuessInput({handleAddGuess}) {
   const handleOnSubmit = (e) => {
     e.preventDefault();
     handleAddGuess({
-      tentativeGuess,
+      value: tentativeGuess,
       id: crypto.randomUUID()
     })
     setTentativeGuess('');
