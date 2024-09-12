@@ -1,6 +1,6 @@
 import React from 'react';
 
-function GuessInput({handleAddGuess}) {
+function GuessInput({handleAddGuess, handleSetWon, answer}) {
   const [tentativeGuess, setTentativeGuess] = React.useState('');
 
   const handleOnSubmit = (e) => {
@@ -9,6 +9,9 @@ function GuessInput({handleAddGuess}) {
       value: tentativeGuess,
       id: crypto.randomUUID()
     })
+    if(tentativeGuess === answer) {
+      handleSetWon(true);
+    }
     setTentativeGuess('');
   };
 

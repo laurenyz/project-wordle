@@ -1,18 +1,6 @@
 import React from 'react';
-import { checkGuess } from '../../game-helpers';
 
-const defaultArray = Array(5).fill({
-  letter: '',
-  status: ''
-})
-
-function Guess({value = '', answer = ''}) {
-  let guessArray
-  if(!value) {
-    guessArray = defaultArray
-  } else {
-    guessArray = checkGuess(value, answer)
-  }
+function Guess({guessArray}) {
 
   return (
     <p className="guess">

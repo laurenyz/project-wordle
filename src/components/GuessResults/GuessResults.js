@@ -2,21 +2,22 @@ import React from 'react';
 import Guess from '../Guess';
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
 import { range } from '../../utils';
+import { checkGuess } from '../../game-helpers';
 
 function GuessResults({guesses, answer}) {
-  
-  const emptyRowNum = NUM_OF_GUESSES_ALLOWED - guesses.length;
-  const emptyRows = range(emptyRowNum);
+
+  const mappedGuesses = range(NUM_OF_GUESSES_ALLOWED).map((_, index) => {
+    if(!guesses[index]) {
+      return Array(5).fill({letter: '', status: ''})
+    }
+    return checkGuess(guesses[index].value, answer)
+  })
+
   return (
     <div className="guess-results">
       {
-        guesses.map(({value, id}) =>{
-          return <Guess key={id} value={value} answer={answer} />
-        })
-      }
-      {
-        emptyRows.map((el) => {
-          return <Guess key={el} />
+        mappedGuesses.map((guessArray, index) =>{
+          return <Guess key={index} guessArray={guessArray} />
         })
       }
     </div>
