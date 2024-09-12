@@ -1,12 +1,15 @@
 import React from 'react';
 
-function GuessInput() {
-  const [guess, setGuess] = React.useState('');
+function GuessInput({handleAddGuess}) {
+  const [tentativeGuess, setTentativeGuess] = React.useState('');
 
   const handleOnSubmit = (e) => {
     e.preventDefault();
-    console.log(guess);
-    setGuess('');
+    handleAddGuess({
+      tentativeGuess,
+      id: crypto.randomUUID()
+    })
+    setTentativeGuess('');
   };
 
   return(
@@ -14,11 +17,11 @@ function GuessInput() {
       <label htmlFor="guess-input">Enter guess:</label>
       <input 
         required 
-        pattern="\w{5,5}"
+         pattern="[a-zA-Z]{5}"
         minLength={5} //bugging out but left for reference
         maxLength={5} 
         title="5 letter word" //adds tooltip
-        id="guess-input" value={guess} onChange={(e)=>setGuess(e.target.value.toUpperCase())} type="text" />
+        id="guess-input" value={tentativeGuess} onChange={(e)=>setTentativeGuess(e.target.value.toUpperCase())} type="text" />
     </form>
   )
 }
