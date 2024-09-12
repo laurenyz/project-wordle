@@ -5,6 +5,8 @@ import { WORDS } from '../../data';
 import GuessInput from '../GuessInput';
 import GuessResults from '../GuessResults/GuessResults';
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants';
+import WonBanner from '../WonBanner/WonBanner';
+import LostBanner from '../LostBanner/LostBanner';
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -22,33 +24,20 @@ function Game() {
       alert('You already guessed that word!');
       return
     }
+    if(tentativeGuess.value === answer) {
+      setWon(true);
+    }
     setGuesses([...guesses, tentativeGuess]);
-  }
-
-  const handleSetWon = (bool) => {
-    setWon(bool);
   }
 
   return <>
   <GuessResults guesses={guesses} answer={answer} />
+  <GuessInput handleAddGuess={handleAddGuess} answer={answer} disabled={won || lost} />
   {
-    !(won || lost) &&
-    <GuessInput handleAddGuess={handleAddGuess} handleSetWon={handleSetWon} answer={answer} />
+    won && <WonBanner numGuesses={guesses.length} />
   }
   {
-    won &&
-    <div className="happy banner">
-      <p>
-        <strong>Congratulations!</strong> Got it in
-        <strong>{guesses.length} {guesses.length>1 ? "guesses" : "guess"}</strong>.
-      </p>
-    </div>
-  }
-  {
-    lost &&
-    <div className="sad banner">
-    <p>Sorry, the correct answer is <strong>{answer}</strong>.</p>
-  </div>
+    lost && <LostBanner answer={answer} />
   }
   </>;
 }
